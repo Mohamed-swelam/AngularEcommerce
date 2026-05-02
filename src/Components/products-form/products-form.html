@@ -1,0 +1,88 @@
+<section class="products-form-shell">
+  <div class="form-card">
+    <div class="form-head">
+      <span class="form-kicker">Catalog</span>
+      <h2>{{ isEditMode ? 'Update product' : 'Add a new product' }}</h2>
+      <p>Keep the essentials tight and consistent. Strong titles, clear categories, and a clean image go a long way.</p>
+    </div>
+
+    <form class="product-form" autocomplete="off" (ngSubmit)="onSubmit(productForm)" #productForm="ngForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="productName">Product name</label>
+          <input id="productName" type="text" #title="ngModel" placeholder="Ex: Essence Mascara Lash Princess" name="title" [(ngModel)]="formModel.title" required>
+          @if(title.invalid && title.touched) {
+          <small class="text-danger">Product name is required.</small>
+        }
+
+        </div>
+
+
+        <div class="field">
+          <label for="productCategory">Category</label>
+          <select id="productCategory" #category="ngModel" name="category" [(ngModel)]="formModel.category" required>
+            <option value="" disabled>Select category</option>
+            <option value="beauty">Beauty</option>
+            <option value="fragrances">Fragrances</option>
+            <option value="furniture">Furniture</option>
+            <option value="groceries">Groceries</option>
+          </select>
+          @if(category.invalid && category.touched) {
+            <small class="text-danger">Category is required.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="productPrice">Price</label>
+          <input id="productPrice" type="number" placeholder="24.99" #price="ngModel" name="price" [(ngModel)]="formModel.price" required>
+          @if(price.invalid && price.touched) {
+            <small class="text-danger">Price is required.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="productStock">Stock</label>
+          <input id="productStock" type="number" placeholder="80" #stock="ngModel" name="stock" [(ngModel)]="formModel.stock" required>
+          @if(stock.invalid && stock.touched) {
+            <small class="text-danger">Stock is required.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="productSku">SKU</label>
+          <input id="productSku" type="text" placeholder="BEA-ESS-001" name="sku" [(ngModel)]="formModel.sku">
+        </div>
+
+        <div class="field">
+          <label for="productBrand">Brand</label>
+          <input id="productBrand" type="text" placeholder="Essence" #brand="ngModel" name="brand" [(ngModel)]="formModel.brand" required>
+          @if(brand.invalid && brand.touched) {
+            <small class="text-danger">Brand is required.</small>
+          }
+        </div>
+
+        <div class="field field-full">
+          <label for="productImage">Image URL</label>
+          <input id="productImage" type="url" placeholder="https://" #images="ngModel" name="images" [(ngModel)]="formModel.images" required>
+          @if(images.invalid && images.touched) {
+            <small class="text-danger">Image URL is required.</small>
+          }
+        </div>
+
+        <div class="field field-full">
+          <label for="productDescription">Description</label>
+          <textarea id="productDescription" rows="4" placeholder="Short, clear product description." name="description" [(ngModel)]="formModel.description"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-actions">
+          <button class="ghost-btn" type="button" (click)="productForm.resetForm()">Reset</button>
+          <button class="primary-btn" type="submit" [disabled]="!productForm.valid">
+            {{ isEditMode ? 'Update product' : 'Add product' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

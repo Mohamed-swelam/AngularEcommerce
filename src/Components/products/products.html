@@ -1,0 +1,79 @@
+<div class="datafromparent align-content-center">
+  <ng-content></ng-content>
+</div>
+
+@if (filteredProducts.length === 0) {
+  <div class="empty-state">No products found for this category.</div>
+} @else {
+  <div class="row g-4 products-grid">
+    @for (prod of pagedProducts; track prod.id; let i = $index) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <article class="card h-100 product-card">
+          <div class="image-wrap">
+            <img class="product-image" appZooming [src]="prod.images[0]" [alt]="prod.title">
+            <span class="price-pill">${{ prod.price.toFixed(2) }}</span>
+          </div>
+          <div class="card-body">
+            <div class="product-head">
+              <span class="category-chip">{{ prod.category }}</span>
+              @if (prod.stock == 0) {
+                <span class="stock-chip out-of-stock text-danger">Out of Stock</span>
+              } @else {
+                <span class="stock-chip in-stock">{{prod.stock}}</span>
+              }
+            </div>
+            <h5 class="card-title">{{ prod.title }}</h5>
+            <p class="card-text">{{ prod.description | limit: 8 }}</p>
+          </div>
+          <div class="product-specs">
+            <div class="spec">
+              <span class="spec-label" #label>Brand</span>
+              <strong>{{ prod.brand }}</strong>
+            </div>
+            <div class="spec">
+              <span class="spec-label">SKU</span>
+              <strong>{{ prod.sku }}</strong>
+            </div>
+          </div>
+          <div class="product-cta">
+            <div class="quantity-control">
+              <input type="number" class="form-control" min="1" value="1" max="{{ prod.stock }}" #quantity [disabled]="prod.stock == 0">
+            </div>
+            <app-buttons
+              class="product-buy"
+              [title]="'Buy'"
+              [color]="'linear-gradient(135deg, #fde68a, #f59e0b)'"
+              [width]="'100%'"
+              [height]="'44px'"
+              [disabled]="prod.stock == 0"
+              (action)="BuyProduct(prod, quantity.value)">
+            </app-buttons>
+          </div>
+          <div class="product-links">
+            <a class="details-btn" [routerLink]="['/product', prod.id]">View details</a>
+            <a class="edit-btn" [routerLink]="['/products/edit', prod.id]">Update</a>
+          </div>
+        </article>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination-shell">
+      <span class="pagination-info">Showing {{ pageStart }}-{{ pageEnd }} of {{ filteredProducts.length }}</span>
+      <div class="pagination-controls" role="navigation" aria-label="Pagination">
+        <button class="pagination-btn" type="button" (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+        @for (page of pageNumbers; track page) {
+          <button
+            class="pagination-btn"
+            type="button"
+            [class.is-active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button>
+        }
+        <button class="pagination-btn" type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+    </div>
+  }
+}

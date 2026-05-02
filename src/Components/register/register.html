@@ -1,0 +1,63 @@
+<section class="products-form-shell">
+	<div class="form-card">
+		<div class="form-head">
+			<span class="form-kicker">Account</span>
+			<h2>Create your account</h2>
+			<p>Use a real email so you can reset your password later.</p>
+		</div>
+
+		<form class="product-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+			<div class="form-grid">
+				<div class="field">
+					<label for="registerFirstName">First name</label>
+					<input id="registerFirstName" type="text" placeholder="First name" formControlName="firstName">
+					@if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
+						<small class="text-danger">First name is required.</small>
+					}
+				</div>
+
+				<div class="field">
+					<label for="registerLastName">Last name</label>
+					<input id="registerLastName" type="text" placeholder="Last name" formControlName="lastName">
+					@if (registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched) {
+						<small class="text-danger">Last name is required.</small>
+					}
+				</div>
+
+				<div class="field field-full">
+					<label for="registerEmail">Email</label>
+					<input id="registerEmail" type="email" placeholder="name@example.com" formControlName="email">
+					@if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+						<small class="text-danger">Enter a valid email.</small>
+					}
+				</div>
+
+				<div class="field">
+					<label for="registerPassword">Password</label>
+					<input id="registerPassword" type="password" placeholder="At least 6 characters" formControlName="password">
+					@if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+						<small class="text-danger">Password must be at least 6 characters.</small>
+					}
+				</div>
+
+				<div class="field">
+					<label for="registerConfirm">Confirm password</label>
+					<input id="registerConfirm" type="password" placeholder="Repeat password" formControlName="confirmPassword">
+					@if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+						<small class="text-danger">Confirmation is required.</small>
+					}
+					@if (registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched) {
+						<small class="text-danger">Passwords do not match.</small>
+					}
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-actions">
+					<button class="ghost-btn" type="reset" (click)="registerForm.reset()">Reset</button>
+					<button class="primary-btn" type="submit" [disabled]="registerForm.invalid">Create account</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

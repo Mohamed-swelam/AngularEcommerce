@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+
+:root {
+    --font-sans: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Playfair Display", "Times New Roman", serif;
+    --color-ink: #1f2a24;
+    --color-muted: #6a726c;
+    --color-accent: #f4b886;
+    --color-accent-2: #0f3d3e;
+    --color-bg: #f7f1e8;
+    --color-surface: #ffffff;
+    --color-surface-alt: #fff7ef;
+    --color-border: rgba(15, 61, 62, 0.12);
+    --shadow-soft: 0 18px 45px -28px rgba(15, 61, 62, 0.35);
+    --radius-lg: 18px;
+    --radius-xl: 22px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background:
+        radial-gradient(circle at 12% 18%, rgba(255, 245, 232, 0.9), rgba(255, 255, 255, 0) 55%),
+        radial-gradient(circle at 88% 0%, rgba(244, 184, 134, 0.2), rgba(255, 255, 255, 0) 45%),
+        linear-gradient(180deg, #fffaf3 0%, var(--color-bg) 55%, #fffdf9 100%);
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: var(--color-accent-2);
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+::selection {
+    background: rgba(244, 184, 134, 0.35);
+    color: var(--color-ink);
+}
+
+.container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}

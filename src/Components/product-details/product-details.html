@@ -1,0 +1,92 @@
+<section class="details-shell">
+	<div class="container py-5">
+		<a class="btn btn-success m-3" routerLink="/" >Back to products</a>
+
+		@if (product) {
+			<div class="details-grid">
+				<div class="media-panel">
+					<div class="media-frame">
+						<img [src]="product.images[0]" [alt]="product.title">
+					</div>
+					@if (product.images.length > 1) {
+						<div class="thumbnail-row">
+							@for (image of product.images; track image) {
+								<button
+									type="button"
+									class="thumb"
+									[class.is-active]="image === (product.images[0])">
+									<img [src]="image" [alt]="product.title">
+								</button>
+							}
+						</div>
+					}
+				</div>
+
+				<div class="info-panel">
+					<div class="meta-row">
+						<span class="category-chip">{{ product.category }}</span>
+						<span class="stock-pill" [class.low-stock]="product.stock < 10">{{ product.stock }} in stock</span>
+					</div>
+
+					<h1 class="product-title">{{ product.title }}</h1>
+					<p class="product-lead">{{ product.description }}</p>
+
+					<div class="price-row">
+						<div>
+							<span class="price">${{ product.price.toFixed(2) }}</span>
+							<span class="discount">Save {{ product.discountPercentage }}%</span>
+						</div>
+						<div class="rating">
+							<span class="rating-value">{{ product.rating }}</span>
+							<span class="rating-label">Rating</span>
+						</div>
+					</div>
+
+					<div class="detail-grid">
+						<div>
+							<span class="detail-label">Brand</span>
+							<strong>{{ product.brand || 'No brand' }}</strong>
+						</div>
+						<div>
+							<span class="detail-label">SKU</span>
+							<strong>{{ product.sku }}</strong>
+						</div>
+						<div>
+							<span class="detail-label">Warranty</span>
+							<strong>{{ product.warrantyInformation }}</strong>
+						</div>
+						<div>
+							<span class="detail-label">Shipping</span>
+							<strong>{{ product.shippingInformation }}</strong>
+						</div>
+						<div>
+							<span class="detail-label">Return policy</span>
+							<strong>{{ product.returnPolicy }}</strong>
+						</div>
+						<div>
+							<span class="detail-label">Minimum order</span>
+							<strong>{{ product.minimumOrderQuantity }}</strong>
+						</div>
+					</div>
+
+					<div class="tag-row">
+						@for (tag of product.tags; track tag) {
+							<span class="tag">{{ tag }}</span>
+						}
+					</div>
+
+					<div class="cta-row">
+						<a class="ghost-btn" [routerLink]="['/products/edit', product.id]">Update product</a>
+						<a class="ghost-btn" routerLink="/">Continue shopping</a>
+					</div>
+				</div>
+			</div>
+		} @else {
+			<div class="details-empty">
+				<h2>Product not found</h2>
+				<p>Try browsing the catalog to find something you like.</p>
+				<a class="ghost-btn" routerLink="/">Back to products</a>
+			</div>
+		}
+	</div>
+</section>
