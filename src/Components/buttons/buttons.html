@@ -1,0 +1,11 @@
+
+<button
+	class="app-button"
+	type="button"
+	[style.background]="color"
+	[style.width]="width"
+	[style.height]="height"
+	[disabled]="disabled"
+	(click)="action.emit($event)">
+	{{ title }}
+</button>

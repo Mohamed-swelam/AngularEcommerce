@@ -1,0 +1,52 @@
+<div class="datafromparent align-content-center">
+  <ng-content></ng-content>
+</div>
+
+<div class="row g-4 products-grid">
+      @for (prod of filteredProducts; track prod.id; let i = $index) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <article class="card h-100 product-card">
+            <div class="image-wrap">
+              <img class="product-image" appZooming [src]="prod.images[0]" [alt]="prod.title">
+              <span class="price-pill">${{ prod.price.toFixed(2) }}</span>
+            </div>
+            <div class="card-body">
+              <div class="product-head">
+                <span class="category-chip">{{ prod.category }}</span>
+                @if (prod.stock == 0) {
+                  <span class="stock-chip out-of-stock text-danger">Out of Stock</span>
+                } @else {
+                  <span class="stock-chip in-stock">{{prod.stock}}</span>
+                }
+              </div>
+              <h5 class="card-title">{{ prod.title }}</h5>
+              <p class="card-text">{{ prod.description | limit: 8 }}</p>
+            </div>
+            <div class="product-specs">
+              <div class="spec">
+                <span class="spec-label" #label>Brand</span>
+                <strong>{{ prod.brand }}</strong>
+              </div>
+              <div class="spec">
+                <span class="spec-label">SKU</span>
+                <strong>{{ prod.sku }}</strong>
+              </div>
+            </div>
+            <div class="product-cta">
+              <div class="quantity-control">
+                <input type="number" class="form-control" min="1" value="1" max="{{ prod.stock }}" #quantity [disabled]="prod.stock == 0">
+              </div>
+              <app-buttons
+                class="product-buy"
+                [title]="'Buy'"
+                [color]="'linear-gradient(135deg, #fde68a, #f59e0b)'"
+                [width]="'100%'"
+                [height]="'44px'"
+                [disabled]="prod.stock == 0"
+                (action)="BuyProduct(prod, quantity.value)">
+              </app-buttons>
+            </div>
+          </article>
+        </div>
+      }
+    </div>

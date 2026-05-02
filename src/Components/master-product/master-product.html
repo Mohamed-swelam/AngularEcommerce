@@ -1,0 +1,35 @@
+
+
+
+
+<section class="products-shell">
+  <div class="container py-5">
+    <div class="products-hero">
+    </div>
+
+    <div class="filters-row">
+      <div class="filter-block">
+        <label for="categorySelect">Category</label>
+        <div class="select-wrap">
+          <select id="categorySelect" class="category-select" aria-label="Filter by category" [(ngModel)]="selectedCategory">
+            <option value="all">All categories</option>
+            <option value="beauty">Beauty</option>
+            <option value="fragrances">Fragrances</option>
+            <option value="furniture">Furnitures</option>
+            <option value="groceries">Groceries</option>
+          </select>
+          <span class="select-icon" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div>
+        Total Price: <strong>${{ totalPrice.toFixed(2) }}</strong>
+      </div>
+    </div>
+    <app-products (totalPriceChange)="onTotalPriceChange($event)" [selectedCategory]="selectedCategory">
+      <h3>Check Our Products</h3>
+    </app-products>
+  </div>
+</section>
+
+
+
