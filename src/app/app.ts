@@ -5,7 +5,7 @@ import { MasterProduct } from '../Components/master-product/master-product';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [MasterProduct],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
