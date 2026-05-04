@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../Models/Interfaces/iproduct';
+import { showToast } from './simple-toast';
 
 @Injectable({
   providedIn: 'root',
@@ -1829,6 +1830,10 @@ export class ProductService {
   }
 
   deleteProductById(id: number) {
+    if (!this.isAdmin()) {
+      showToast('Admin only', 'danger');
+      return;
+    }
     const index = this.products.findIndex(product => product.id === id);
     if (index !== -1) {
       this.products.splice(index, 1);
@@ -1838,6 +1843,10 @@ export class ProductService {
   }
 
   updateProductById(id: number, updatedProduct: any) {
+    if (!this.isAdmin()) {
+      showToast('Admin only', 'danger');
+      return;
+    }
     const index = this.products.findIndex(product => product.id === id);
     if (index !== -1) {
       this.products[index] = { ...this.products[index], ...updatedProduct };
@@ -1847,9 +1856,18 @@ export class ProductService {
   }
 
   AddProduct(newProduct: any) {
+    if (!this.isAdmin()) {
+      showToast('Admin only', 'danger');
+      return;
+    }
     const newId = this.products.length > 0 ? Math.max(...this.products.map(product => product.id)) + 1 : 1;
     const productToAdd = { id: newId, ...newProduct };
     this.products.push(productToAdd);
     console.log(this.products);
+  }
+
+  isAdmin(): boolean {
+
+    return localStorage.getItem('role') === 'admin';
   }
 }

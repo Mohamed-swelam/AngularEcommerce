@@ -51,7 +51,7 @@
           </div>
           <div class="product-links">
             <a class="details-btn" [routerLink]="['/product', prod.id]">View details</a>
-            <a class="edit-btn" [routerLink]="['/products/edit', prod.id]">Update</a>
+            <a class="edit-btn" *ngIf="isAdmin()" [routerLink]="['/products/edit', prod.id]">Update</a>
           </div>
         </article>
       </div>

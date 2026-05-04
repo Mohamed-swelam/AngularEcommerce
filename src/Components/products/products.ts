@@ -6,6 +6,7 @@ import { Zooming } from '../../directives/zooming';
 import { FormsModule } from '@angular/forms';
 import { Buttons } from '../buttons/buttons';
 import { ProductService } from '../../Services/product-service';
+import { showToast } from '../../Services/simple-toast';
 
 @Component({
   selector: 'app-products',
@@ -89,7 +90,7 @@ export class Products implements OnChanges, AfterViewChecked, OnInit {
 
   BuyProduct(product: any, quantity: any) {
     if (quantity > product.stock) {
-      alert("Sorry, you can not purchase that item with this quantity");
+      showToast('Sorry, you can not purchase that item with this quantity', 'warning');
     } else {
       this.totalPrice += product.price * quantity;
       product.stock -= quantity;
@@ -98,6 +99,9 @@ export class Products implements OnChanges, AfterViewChecked, OnInit {
   }
 
 
+  isAdmin(): boolean {
 
+    return localStorage.getItem('role') === 'admin';
+  }
 
 }

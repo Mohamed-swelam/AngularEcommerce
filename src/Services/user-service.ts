@@ -2,43 +2,51 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {
 
-  }
+  private apiUrl = 'http://localhost:2000/users';
 
-  getUsers(): Observable<any> {
-    return this.http.get("http://localhost:2000/users")
+  constructor(private http: HttpClient) { }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   getDataByID(id: number): Observable<any> {
-    return this.http.get(`http://localhost:2000/users/${id}`)
-
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.http.delete(`http://localhost:2000/users/${id}`)
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
   addUser(user: any): Observable<any> {
-    return this.http.post("http://localhost:2000/users", user)
+    return this.http.post(this.apiUrl, user);
   }
 
   checkEmailExists(email: string): Observable<boolean> {
-    return new Observable<boolean>((observer) => {
-      this.http.get<any[]>(`http://localhost:2000/users?email=${email}`).subscribe({
-        next: (users) => {
-          observer.next(users.length > 0);
-          observer.complete();
-        },
-        error: (error) => {
-          console.error('Error checking email existence:', error);
-          observer.error(error);
-        }
-      });
+
+    return new Observable((observer) => {
+
+      this.http
+        .get<any[]>(`${this.apiUrl}?email=${email}`)
+        .subscribe({
+
+          next: (users) => {
+
+            observer.next(users.length > 0);
+            observer.complete();
+          },
+
+          error: (err) => {
+
+            observer.error(err);
+          }
+        });
     });
   }
 }

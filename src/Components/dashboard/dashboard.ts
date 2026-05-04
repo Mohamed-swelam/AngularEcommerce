@@ -1,57 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../Services/user-service';
+import { catchError, finalize, Observable, of, Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit {
-  users: any[] = [];
+  data$!: Observable<any[]>;
   isLoading = false;
   errorMessage = '';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
-  loadUsers() {
+  loadUsers(): void {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.userService.getUsers().subscribe({
-      next: (response) => {
-        this.users = Array.isArray(response) ? response : [];
-      },
-      error: () => {
+    this.data$ = this.userService.getUsers().pipe(
+      catchError(() => {
         this.errorMessage = 'Failed to load users.';
-      },
-      complete: () => {
+        this.cd.markForCheck();
+
+        return of([]);
+      }),
+      finalize(() => {
         this.isLoading = false;
-      }
-    });
+        this.cd.markForCheck();
+
+      })
+    );
   }
 
-  deleteUser(userId: number) {
-    if (!userId) {
-      return;
-    }
+  deleteUser(userId: number): void {
+
+    if (!userId) return;
 
     const confirmed = confirm('Delete this user?');
-    if (!confirmed) {
-      return;
-    }
+
+    if (!confirmed) return;
 
     this.userService.deleteUser(userId).subscribe({
       next: () => {
-        this.users = this.users.filter((user) => user.id !== userId);
+        this.loadUsers();
       },
       error: () => {
         this.errorMessage = 'Failed to delete user.';
       }
     });
   }
+
 }

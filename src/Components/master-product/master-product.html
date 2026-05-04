@@ -23,7 +23,7 @@
       </div>
       <div class="filters-actions">
         <div class="total-price">Total Price: <strong>${{ totalPrice.toFixed(2) }}</strong></div>
-        <a class="add-product-btn" routerLink="/products/new">+ Add product</a>
+        <a class="add-product-btn" *ngIf="isAdmin()" routerLink="/products/new">+ Add product</a>
       </div>
     </div>
     <app-products (totalPriceChange)="onTotalPriceChange($event)" [selectedCategory]="selectedCategory">

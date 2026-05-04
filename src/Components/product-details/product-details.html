@@ -76,7 +76,7 @@
 					</div>
 
 					<div class="cta-row">
-						<a class="ghost-btn" [routerLink]="['/products/edit', product.id]">Update product</a>
+						<a class="ghost-btn" *ngIf="isAdmin()" [routerLink]="['/products/edit', product.id]">Update product</a>
 						<a class="ghost-btn" routerLink="/">Continue shopping</a>
 					</div>
 				</div>

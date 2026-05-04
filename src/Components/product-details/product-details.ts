@@ -24,4 +24,10 @@ export class ProductDetails implements OnInit {
       this.product = this.productService.getProductById(productId);
     }
   }
+
+
+  isAdmin(): boolean {
+
+    return localStorage.getItem('role') === 'admin';
+  }
 }

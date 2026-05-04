@@ -1,45 +1,96 @@
 <section class="dashboard-shell">
-	<div class="container py-5">
-		<div class="dashboard-card">
-			<div class="dashboard-head">
-				<div>
-					<span class="dashboard-kicker">Users</span>
-					<h2>Users dashboard</h2>
-					<p>Manage registered users and keep the list clean.</p>
-				</div>
-				<button class="ghost-btn" type="button" (click)="loadUsers()" [disabled]="isLoading">
-					Refresh
-				</button>
-			</div>
+  <div class="container py-5">
 
-			@if (isLoading) {
-				<div class="state-card">Loading users...</div>
-			} @else if (errorMessage) {
-				<div class="state-card state-error">{{ errorMessage }}</div>
-			} @else if (users.length === 0) {
-				<div class="state-card">No users found yet.</div>
-			} @else {
-				<div class="users-table">
-					<div class="users-row users-row--head">
-						<span>ID</span>
-						<span>First Name</span>
-						<span>Last Name</span>
-						<span>Email</span>
-						<span>Action</span>
-					</div>
-					@for (user of users; track user.id) {
-						<div class="users-row">
-							<span>#{{ user.id }}</span>
-							<span>{{ user.firstName || 'Unknown' }}</span>
-							<span>{{ user.lastName || 'Unknown' }}</span>
-							<span>{{ user.email }}</span>
-							<button class="delete-btn" type="button" (click)="deleteUser(user.id)">
-								Delete
-							</button>
-						</div>
-					}
-				</div>
-			}
-		</div>
-	</div>
+    <div class="dashboard-card">
+
+      <div class="dashboard-head">
+
+        <div>
+          <span class="dashboard-kicker">Users</span>
+          <h2>Users dashboard</h2>
+          <p>Manage registered users and keep the list clean.</p>
+        </div>
+
+        <button
+          class="ghost-btn"
+          type="button"
+          (click)="loadUsers()"
+          [disabled]="isLoading">
+
+          Refresh
+
+        </button>
+
+      </div>
+
+      @if (isLoading) {
+
+        <div class="state-card">
+          Loading users...
+        </div>
+
+      } @else {
+
+        @if (data$ | async; as users) {
+
+          @if (errorMessage) {
+
+            <div class="state-card state-error">
+              {{ errorMessage }}
+            </div>
+
+          } @else if (users.length === 0) {
+
+            <div class="state-card">
+              No users found yet.
+            </div>
+
+          } @else {
+
+            <div class="users-table">
+
+              <div class="users-row users-row--head">
+                <span>ID</span>
+                <span>First Name</span>
+                <span>Last Name</span>
+                <span>Email</span>
+                <span>Action</span>
+              </div>
+
+              @for (user of users; track user.id) {
+
+                <div class="users-row">
+
+                  <span>#{{ user.id }}</span>
+
+                  <span>
+                    {{ user.firstName || 'Unknown' }}
+                  </span>
+
+                  <span>
+                    {{ user.lastName || 'Unknown' }}
+                  </span>
+
+                  <span>
+                    {{ user.email }}
+                  </span>
+
+                  <button
+                    class="delete-btn"
+                    type="button"
+                    (click)="deleteUser(user.id)">
+
+                    Delete
+
+                  </button>
+
+                </div>
+              }
+
+            </div>
+          }
+        }
+      }
+    </div>
+  </div>
 </section>

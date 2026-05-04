@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { passwordMatchValidator } from '../CustomValidation/passwordMatchValidator';
+import { showToast } from '../../Services/simple-toast';
 
 @Component({
   selector: 'app-register',
@@ -49,7 +50,7 @@ export class Register {
     this.userService.checkEmailExists(email).subscribe({
       next: (exists) => {
         if (exists) {
-          alert('Email already exists. Please use a different email.');
+          showToast('Email already exists. Please use a different email.', 'warning');
         } else {
           this.registerUser();
         }

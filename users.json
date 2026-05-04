@@ -2119,6 +2119,20 @@
       "email": "Mohamed1@gmail.com",
       "password": "123456",
       "id": "HdbeNfDnVbo"
+    },
+    {
+      "firstName": "Mohamed",
+      "lastName": "Swelam",
+      "email": "Mohamed3@gmail.com",
+      "password": "123456",
+      "id": "yXZ467Li8mA"
+    },
+    {
+      "firstName": "Mohamed",
+      "lastName": "Swelam",
+      "email": "Ahmed@gmail.com",
+      "password": "123456",
+      "id": "XNj53Aoe7K4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

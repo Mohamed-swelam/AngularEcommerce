@@ -1,28 +1,93 @@
-
-
 <nav class="site-header navbar navbar-expand-lg navbar-light">
-  <a class="navbar-brand site-brand" routerLink="/">Ecommerce</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  <a class="navbar-brand site-brand" routerLink="/">
+    Ecommerce
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div
+    class="collapse navbar-collapse"
+    id="navbarSupportedContent"
+  >
+
     <ul class="navbar-nav mr-auto">
+
+      <!-- Home -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/">Home</a>
+        <a class="nav-link" routerLink="/">
+          Home
+        </a>
       </li>
+
+      <!-- Products -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/products">Products</a>
+        <a class="nav-link" routerLink="/products">
+          Products
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+
+      <!-- Dashboard -->
+      <li
+        class="nav-item"
+        *ngIf="isAdmin()"
+      >
+        <a
+          class="nav-link"
+          routerLink="/dashboard"
+        >
+          Dashboard
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/register">Register</a>
+
+      <li
+        class="nav-item"
+        *ngIf="!isLoggedIn()"
+      >
+        <a
+          class="nav-link"
+          routerLink="/register"
+        >
+          Register
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
+
+      <li
+        class="nav-item"
+        *ngIf="!isLoggedIn()"
+      >
+        <a
+          class="nav-link"
+          routerLink="/login"
+        >
+          Login
+        </a>
       </li>
+
+      <!-- Logout -->
+      <li
+        class="nav-item"
+        *ngIf="isLoggedIn()"
+      >
+        <button
+          class="btn btn-danger ml-2"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </li>
+
     </ul>
+
   </div>
 </nav>

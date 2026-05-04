@@ -6,14 +6,17 @@ import { ProductsForm } from '../Components/products-form/products-form';
 import { Register } from '../Components/register/register';
 import { Login } from '../Components/login/login';
 import { Dashboard } from '../Components/dashboard/dashboard';
+import { authGuardGuard } from '../guards/auth-guard-guard';
+import { childGuardGuard } from '../guards/child-guard-guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
+    canActivateChild: [childGuardGuard],
     children: [
       {
-        path: 'products', redirectTo: "", pathMatch: "full"
+        path: 'products', component: MasterProduct
       },
       {
         path: '', component: MasterProduct
@@ -28,7 +31,7 @@ export const routes: Routes = [
         path: 'product/:id', component: ProductDetails
       },
       {
-        path: 'dashboard', component: Dashboard
+        path: 'dashboard', component: Dashboard, canActivate: [authGuardGuard]
       }
     ]
   }, {

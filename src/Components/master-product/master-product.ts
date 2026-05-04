@@ -20,4 +20,8 @@ export class MasterProduct {
     this.totalPrice = data;
   }
 
+  isAdmin(): boolean {
+
+    return localStorage.getItem('role') === 'admin';
+  }
 }

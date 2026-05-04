@@ -26,35 +26,83 @@ export class Login {
   }
 
   onSubmit() {
+
     if (this.loginForm.invalid) {
+
       this.loginForm.markAllAsTouched();
       return;
     }
 
     this.loginError = '';
     this.isSubmitting = true;
-    const { email, password } = this.loginForm.getRawValue();
+
+    const { email, password } =
+      this.loginForm.getRawValue();
 
     this.userService.getUsers().subscribe({
+
       next: (response) => {
-        const users = Array.isArray(response) ? response : [];
+
+        const users =
+          Array.isArray(response) ? response : [];
+
         const match = users.find(
-          (user: any) => user.email === email && user.password === password
+          (user: any) =>
+            user.email === email &&
+            user.password === password
         );
 
         if (match) {
-          this.router.navigate(['/']);
+          localStorage.setItem('auth', 'true');
+
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(match)
+          );
+
+          if (
+            match.email === 'Mohamed@gmail.com'
+          ) {
+
+            localStorage.setItem('role', 'admin');
+            this.router.navigate(['/dashboard']);
+          } else {
+
+            localStorage.setItem('role', 'user');
+            this.router.navigate(['/']);
+          }
+
+
           return;
         }
 
-        this.loginError = 'Invalid email or password.';
+        this.loginError =
+          'Invalid email or password.';
       },
+
       error: () => {
-        this.loginError = 'Login failed. Please try again.';
+
+        this.loginError =
+          'Login failed. Please try again.';
       },
+
       complete: () => {
+
         this.isSubmitting = false;
       }
     });
+  }
+
+  logout() {
+
+    localStorage.removeItem('auth');
+    localStorage.removeItem('currentUser');
+
+    this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): boolean {
+
+    return localStorage.getItem('auth') === 'true';
   }
 }
